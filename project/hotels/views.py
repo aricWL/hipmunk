@@ -23,17 +23,17 @@ class SearchAPI(Resource):
         while len(results) > 0:
             # Getting current min from each result
             current_mins = [result[-1]['ecstasy'] for result in results]
-            # Getting the min of the current mins
-            low_index = current_mins.index(min(current_mins))
+            # Getting the index of the min of the current mins
+            min_index = current_mins.index(min(current_mins))
             # Adding min to merged list
-            merged.append(results[low_index][-1])
+            merged.append(results[min_index][-1])
             # Removing the merged min
-            results[low_index].pop()
+            results[min_index].pop()
             # If that results list is now empty, remove it
-            if len(results[low_index]) == 0:
-                results.pop(low_index)
+            if len(results[min_index]) == 0:
+                results.pop(min_index)
                 
-        # The list will be in reverse because we used push()
+        # The list will be in reverse because we push()'ed the min vals
         merged.reverse()
 
         return jsonify({'results': merged})
